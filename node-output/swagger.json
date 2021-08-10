@@ -1,0 +1,1270 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Konec Solution",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/JIAHONGZHANG/Konec-Solution/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  }, {
+    "url" : "http://localhost:8000/"
+  }, {
+    "url" : "https://localhost:8000/"
+  } ],
+  "tags" : [ {
+    "name" : "General",
+    "description" : "APIs for general aspects"
+  }, {
+    "name" : "Customer",
+    "description" : "APIs for customers"
+  }, {
+    "name" : "Service",
+    "description" : "APIs for partner and sales"
+  }, {
+    "name" : "Booking",
+    "description" : "APIs for booking"
+  } ],
+  "paths" : {
+    "/api/auth/customer/signin" : {
+      "post" : {
+        "tags" : [ "Customer" ],
+        "summary" : "customer sign in",
+        "operationId" : "customerLogin",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "headers" : {
+              "Set-Cookie" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "example" : "ksid=abcde12345; Path=/; HttpOnly"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                },
+                "examples" : {
+                  "ok" : {
+                    "value" : {
+                      "success" : 1,
+                      "data" : {
+                        "isFirstSignedIn" : true,
+                        "msg" : "User signin successfully."
+                      }
+                    }
+                  },
+                  "failed" : {
+                    "value" : {
+                      "success" : 0,
+                      "msg" : "Invalid username or password",
+                      "isRecaptchaRequired" : true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                },
+                "example" : {
+                  "success" : 0,
+                  "msg" : "some errors"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                },
+                "example" : {
+                  "success" : 0,
+                  "msg" : "some errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/customer/signup" : {
+      "post" : {
+        "tags" : [ "Customer" ],
+        "summary" : "customer sign up",
+        "operationId" : "customerSignup",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SignupRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                },
+                "examples" : {
+                  "ok" : {
+                    "value" : {
+                      "success" : 1,
+                      "data" : {
+                        "email" : "example@example.com"
+                      }
+                    }
+                  },
+                  "failed" : {
+                    "value" : {
+                      "success" : 0,
+                      "msg" : "Sign up failed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                },
+                "example" : {
+                  "success" : 0,
+                  "msg" : "some errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/service/signup" : {
+      "post" : {
+        "tags" : [ "Service" ],
+        "operationId" : "serviceSignup",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/service_signup_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_2"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/service/signin" : {
+      "post" : {
+        "tags" : [ "Service" ],
+        "summary" : "parterners or sales sign in",
+        "operationId" : "serviceLogin",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "headers" : {
+              "Set-Cookie" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "example" : "ksid=abcde12345; Path=/; HttpOnly"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/general/forget_pw" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "trigger backend to send reset password email",
+        "operationId" : "forgetPassword",
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "query",
+          "description" : "The email of the user",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_3"
+                },
+                "examples" : {
+                  "ok" : {
+                    "value" : {
+                      "success" : 1,
+                      "data" : {
+                        "email" : "example@example.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/general/reset_pw" : {
+      "post" : {
+        "tags" : [ "General" ],
+        "summary" : "reset password",
+        "operationId" : "resetPassword",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "query",
+          "description" : "The token placed in a email link",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/general_reset_pw_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_4"
+                },
+                "examples" : {
+                  "ok" : {
+                    "value" : {
+                      "success" : 1,
+                      "data" : {
+                        "msg" : "Password has been reset successfully."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                },
+                "example" : {
+                  "success" : 0,
+                  "msg" : "some errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/general/verify" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "verify users' accounts\n",
+        "operationId" : "verifyEmail",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "query",
+          "description" : "The token used for verifying the account",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_5"
+                },
+                "examples" : {
+                  "ok" : {
+                    "value" : {
+                      "success" : 1,
+                      "data" : {
+                        "email" : "example@example.com",
+                        "msg" : "Email account activated successfully."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/general/signout" : {
+      "post" : {
+        "tags" : [ "General" ],
+        "summary" : "users sign out",
+        "operationId" : "signOut",
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_6"
+                },
+                "examples" : {
+                  "ok" : {
+                    "value" : {
+                      "success" : 1,
+                      "data" : {
+                        "msg" : "User has been signed-out."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/current" : {
+      "get" : {
+        "tags" : [ "General" ],
+        "summary" : "Get current user",
+        "operationId" : "currentUser",
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_7"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "failed",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                },
+                "example" : {
+                  "success" : 0,
+                  "msg" : "some errors"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings" : {
+      "get" : {
+        "tags" : [ "Booking" ],
+        "summary" : "Get booking list",
+        "operationId" : "getbookings",
+        "parameters" : [ {
+          "name" : "size",
+          "in" : "query",
+          "description" : "The size of the result",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        }, {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "The page of the result",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_8"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/booking/{id}" : {
+      "get" : {
+        "tags" : [ "Booking" ],
+        "summary" : "Get one booking",
+        "operationId" : "getBooking",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the booking",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Booking" ],
+        "summary" : "Update one booking",
+        "operationId" : "updateBooking",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The ID of the booking",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/booking_id_body"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok"
+          }
+        }
+      }
+    },
+    "/api/booking" : {
+      "post" : {
+        "tags" : [ "Booking" ],
+        "summary" : "Create one booking",
+        "operationId" : "createBooking",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateBookingRequest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_9"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "FlagType" : {
+        "type" : "integer",
+        "description" : "The operation is successful or not.\n| Value       | meaning     |\n| ----------- | ----------- |\n| 0           | Failed      |\n| 1           | Successful  |\n",
+        "enum" : [ 0, 1 ]
+      },
+      "RoleType" : {
+        "type" : "string",
+        "description" : "The role of the user",
+        "enum" : [ "customer", "sale", "partner", "admin" ]
+      },
+      "LoginRequest" : {
+        "required" : [ "email", "password" ],
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "recaptchaToken" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SignupRequest" : {
+        "required" : [ "email", "firstName", "lastName", "password", "recaptchaToken" ],
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "recaptchaToken" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SigninResponse" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/SigninResponse_data"
+          }
+        }
+      },
+      "PartnerSignupRequest" : {
+        "properties" : {
+          "roleName" : {
+            "type" : "string"
+          },
+          "signUpData" : {
+            "$ref" : "#/components/schemas/PartnerSignupRequest_signUpData"
+          }
+        }
+      },
+      "SaleSignupRequest" : {
+        "properties" : {
+          "roleName" : {
+            "type" : "string"
+          },
+          "signUpData" : {
+            "$ref" : "#/components/schemas/SaleSignupRequest_signUpData"
+          }
+        }
+      },
+      "AdminSignupRequest" : {
+        "properties" : {
+          "roleName" : {
+            "type" : "string"
+          },
+          "signUpData" : {
+            "$ref" : "#/components/schemas/AdminSignupRequest_signUpData"
+          }
+        }
+      },
+      "PartnerType" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "avatar" : {
+            "type" : "string"
+          },
+          "ABN" : {
+            "type" : "string"
+          },
+          "contactFirstName" : {
+            "type" : "string"
+          },
+          "contactLastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "businessName" : {
+            "type" : "string"
+          },
+          "businessAddr" : {
+            "type" : "string"
+          },
+          "businessSuburb" : {
+            "type" : "string"
+          },
+          "businessPostCode" : {
+            "type" : "string"
+          },
+          "deliveryAddr" : {
+            "type" : "string"
+          },
+          "deliverySuburb" : {
+            "type" : "string"
+          },
+          "deliveryPostCode" : {
+            "type" : "string"
+          },
+          "servicePostCode" : {
+            "type" : "string"
+          },
+          "isKonecOfficial" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "PartnerSignupResponse" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/PartnerType"
+          }
+        }
+      },
+      "SaleType" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "avatar" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "isKonecOfficial" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "SaleSignupReponse" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/SaleSignupRequest"
+          }
+        }
+      },
+      "AdminType" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "avatar" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AdminSignupResponse" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/AdminType"
+          }
+        }
+      },
+      "CustomerType" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "avatar" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "suburb" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "postCode" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "city" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "msg" : {
+            "type" : "string"
+          },
+          "isRecaptchaRequired" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "BookingType" : {
+        "properties" : {
+          "bookingId" : {
+            "type" : "string",
+            "readOnly" : true
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "postCode" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "suburb" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "state" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "inspectionTime" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "bookingNote" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "createdAt" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "nullable" : true,
+            "readOnly" : true
+          }
+        }
+      },
+      "CreateBookingRequest" : {
+        "properties" : {
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "postCode" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "suburb" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "city" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "inspectionTime" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "isBookingVerified" : {
+            "type" : "boolean"
+          },
+          "bookingNote" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/SigninResponse"
+        }, {
+          "$ref" : "#/components/schemas/ErrorResponse"
+        } ]
+      },
+      "inline_response_200_1" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_1_data"
+          },
+          "msg" : {
+            "type" : "string"
+          }
+        }
+      },
+      "service_signup_body" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/PartnerSignupRequest"
+        }, {
+          "$ref" : "#/components/schemas/SaleSignupRequest"
+        }, {
+          "$ref" : "#/components/schemas/AdminSignupRequest"
+        } ]
+      },
+      "inline_response_200_2" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/PartnerSignupResponse"
+        }, {
+          "$ref" : "#/components/schemas/SaleSignupReponse"
+        }, {
+          "$ref" : "#/components/schemas/AdminSignupResponse"
+        }, {
+          "$ref" : "#/components/schemas/ErrorResponse"
+        } ]
+      },
+      "inline_response_200_3" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_1_data"
+          }
+        }
+      },
+      "general_reset_pw_body" : {
+        "required" : [ "newPassword" ],
+        "properties" : {
+          "newPassword" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200_4" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_4_data"
+          },
+          "msg" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200_5" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_5_data"
+          }
+        }
+      },
+      "inline_response_200_6" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_4_data"
+          }
+        }
+      },
+      "inline_response_200_7" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "msg" : {
+            "type" : "string"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_7_data"
+          }
+        }
+      },
+      "inline_response_200_8" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "$ref" : "#/components/schemas/inline_response_200_8_data"
+          },
+          "msg" : {
+            "type" : "string"
+          }
+        }
+      },
+      "booking_id_body" : {
+        "anyOf" : [ {
+          "type" : "object",
+          "allOf" : [ {
+            "$ref" : "#/components/schemas/BookingType"
+          }, {
+            "properties" : {
+              "partnerId" : {
+                "type" : "string"
+              }
+            }
+          }, {
+            "properties" : {
+              "saleId" : {
+                "type" : "string"
+              }
+            }
+          } ]
+        } ]
+      },
+      "inline_response_200_9" : {
+        "properties" : {
+          "success" : {
+            "$ref" : "#/components/schemas/FlagType"
+          },
+          "data" : {
+            "type" : "object",
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/BookingType"
+            }, {
+              "properties" : {
+                "partner" : {
+                  "$ref" : "#/components/schemas/PartnerType"
+                }
+              }
+            }, {
+              "properties" : {
+                "sale" : {
+                  "$ref" : "#/components/schemas/SaleType"
+                }
+              }
+            } ]
+          },
+          "msg" : {
+            "type" : "string"
+          }
+        }
+      },
+      "SigninResponse_data" : {
+        "properties" : {
+          "isFirstSignedIn" : {
+            "type" : "boolean"
+          },
+          "msg" : {
+            "type" : "string",
+            "example" : "User signin successfully."
+          }
+        }
+      },
+      "PartnerSignupRequest_signUpData" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "ABN" : {
+            "type" : "string"
+          },
+          "contactFirstName" : {
+            "type" : "string"
+          },
+          "contactLastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "businessName" : {
+            "type" : "string"
+          },
+          "businessAddr" : {
+            "type" : "string"
+          },
+          "businessSuburb" : {
+            "type" : "string"
+          },
+          "businessPostCode" : {
+            "type" : "string"
+          },
+          "deliveryAddr" : {
+            "type" : "string"
+          },
+          "deliverySuburb" : {
+            "type" : "string"
+          },
+          "deliveryPostCode" : {
+            "type" : "string"
+          },
+          "servicePostCode" : {
+            "type" : "string"
+          },
+          "isKonecOfficial" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "SaleSignupRequest_signUpData" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          },
+          "isKonecOfficial" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "AdminSignupRequest_signUpData" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "contactNumber" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200_1_data" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200_4_data" : {
+        "properties" : {
+          "msg" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200_5_data" : {
+        "properties" : {
+          "email" : {
+            "type" : "string"
+          },
+          "msg" : {
+            "type" : "string"
+          }
+        }
+      },
+      "inline_response_200_7_data" : {
+        "properties" : {
+          "role" : {
+            "$ref" : "#/components/schemas/RoleType"
+          },
+          "profile" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/AdminType"
+            }, {
+              "$ref" : "#/components/schemas/SaleType"
+            }, {
+              "$ref" : "#/components/schemas/PartnerType"
+            }, {
+              "$ref" : "#/components/schemas/CustomerType"
+            } ]
+          }
+        }
+      },
+      "inline_response_200_8_data_meta" : {
+        "type" : "object",
+        "properties" : {
+          "totalBookings" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "inline_response_200_8_data" : {
+        "type" : "object",
+        "properties" : {
+          "meta" : {
+            "$ref" : "#/components/schemas/inline_response_200_8_data_meta"
+          },
+          "bookings" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "allOf" : [ {
+                "$ref" : "#/components/schemas/BookingType"
+              }, {
+                "properties" : {
+                  "partner" : {
+                    "$ref" : "#/components/schemas/PartnerType"
+                  }
+                }
+              }, {
+                "properties" : {
+                  "sale" : {
+                    "$ref" : "#/components/schemas/SaleType"
+                  }
+                }
+              } ]
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "cookieAuth" : {
+        "type" : "apiKey",
+        "name" : "ksid",
+        "in" : "cookie"
+      }
+    }
+  }
+}
